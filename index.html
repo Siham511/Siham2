@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر سهام - نظام إدارة المتجر</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div>🌸 سهام - الطلبات التلقائية من فيسبوك وواتساب 🌸</div>
+        <a class="header-contact" href="contact.html">📩 اتصل بنا - سهام</a>
+    </header>
+
+    <nav class="topbar">
+        <span id="autoStatus">🔴 لم يتم إعداد مصدر الطلبات</span>
+        <a id="fbLinkTop" href="#" target="_blank" rel="noopener">📘 فيسبوك</a>
+        <a id="waLinkTop" href="#" target="_blank" rel="noopener">💬 واتساب</a>
+        <a href="contact.html">📩 اتصل بنا</a>
+        <button type="button" class="logout-btn" data-action="logout">تسجيل الخروج</button>
+    </nav>
+
+    <nav class="tabs">
+        <button type="button" class="tab active" data-tab="fborders">طلبات فيس/واتس</button>
+        <button type="button" class="tab" data-tab="pos">بيع بالباركود</button>
+        <button type="button" class="tab" data-tab="store">المخزن</button>
+        <button type="button" class="tab" data-tab="marketers">المسوقون</button>
+        <button type="button" class="tab" data-tab="online">المتجر</button>
+        <button type="button" class="tab" data-tab="profits">الأرباح</button>
+    </nav>
+
+    <main>
+        <section id="fborders" class="page active">
+            <div class="card setup-card">
+                <h3>⚙️ إعداد مصدر الطلبات</h3>
+                <form id="webhookForm">
+                    <label for="webhookUrl">رابط مصدر الطلبات JSON</label>
+                    <input id="webhookUrl" type="url" placeholder="https://example.com/orders.json">
+                    <button class="btn btn2" type="submit">حفظ الرابط</button>
+                </form>
+                <p class="hint">يجب أن يكون الرابط لمصدر طلبات فعلي يسمح بالوصول إليه من المتصفح. حفظ الرابط وحده لا يربط فيسبوك أو واتساب تلقائياً.</p>
+            </div>
+            <div class="card">
+                <h3>📩 الطلبات الواردة</h3>
+                <div id="fbOrdersList">لا توجد طلبات بعد.</div>
+                <button class="btn btn3" type="button" data-action="check-orders">تحديث الطلبات</button>
+            </div>
+        </section>
+
+        <section id="pos" class="page">
+            <div class="card">
+                <h3>📷 نقطة البيع بالباركود</h3>
+                <form id="saleForm">
+                    <label for="barcodeInput">باركود المنتج</label>
+                    <input id="barcodeInput" autocomplete="off" placeholder="امسحي الباركود أو اكتبيه">
+                    <label for="marketerSelectPos">المسوق</label>
+                    <select id="marketerSelectPos">
+                        <option value="">بدون مسوق</option>
+                    </select>
+                    <button class="btn btn2" type="submit">✅ تسجيل البيع</button>
+                </form>
+                <div id="lastSale" aria-live="polite"></div>
+            </div>
+            <div class="card">
+                <h3>سجل المبيعات</h3>
+                <div id="salesList"></div>
+            </div>
+        </section>
+
+        <section id="store" class="page">
+            <div class="card">
+                <h3>📦 إضافة بضاعة</h3>
+                <form id="productForm">
+                    <label for="pBarcode">الباركود</label>
+                    <input id="pBarcode" required placeholder="باركود فريد لكل منتج">
+                    <label for="pName">اسم المنتج</label>
+                    <input id="pName" required placeholder="اسم المنتج">
+                    <label for="pCost">سعر الشراء</label>
+                    <input id="pCost" type="number" min="0" step="0.01" required placeholder="سعر الشراء">
+                    <label for="pSell">سعر البيع</label>
+                    <input id="pSell" type="number" min="0" step="0.01" required placeholder="سعر البيع">
+                    <label for="pQty">الكمية</label>
+                    <input id="pQty" type="number" min="0" step="1" required placeholder="الكمية">
+                    <button class="btn" type="submit">حفظ المنتج</button>
+                </form>
+            </div>
+            <div class="card">
+                <h3>المنتجات الموجودة</h3>
+                <div id="productTable"></div>
+            </div>
+        </section>
+
+        <section id="marketers" class="page">
+            <div class="card">
+                <h3>👥 إضافة مسوق</h3>
+                <form id="marketerForm">
+                    <label for="mName">اسم المسوق</label>
+                    <input id="mName" required placeholder="اسم المسوق">
+                    <label for="mPhone">رقم الواتساب</label>
+                    <input id="mPhone" type="tel" placeholder="رقم المسوق">
+                    <label for="mAcc">حساب بنكك</label>
+                    <input id="mAcc" placeholder="الحساب (اختياري)">
+                    <label for="mComm">العمولة (%)</label>
+                    <input id="mComm" type="number" min="0" max="100" step="0.1" value="0" required>
+                    <button class="btn" type="submit">حفظ المسوق</button>
+                </form>
+            </div>
+            <div class="card">
+                <h3>قائمة المسوقين</h3>
+                <div id="marketerTable"></div>
+            </div>
+        </section>
+
+        <section id="online" class="page">
+            <div class="card">
+                <h3>🛍️ منتجات المتجر</h3>
+                <p class="hint">هذه قائمة المنتجات المتاحة في مخزون المتجر.</p>
+                <div id="onlineProducts"></div>
+            </div>
+        </section>
+
+        <section id="profits" class="page">
+            <div class="card">
+                <h3>💰 ملخص الأرباح</h3>
+                <p>إجمالي المبيعات: <strong id="totalSales">0</strong> ج</p>
+                <p>تكلفة البضاعة المباعة: <strong id="totalCost">0</strong> ج</p>
+                <p>عمولات المسوقين: <strong id="totalComm">0</strong> ج</p>
+                <p class="net-profit">صافي الربح: <strong id="netProfit">0</strong> ج</p>
+                <button class="btn danger-btn" type="button" data-action="clear-all">تصفير بيانات المتجر</button>
+                <p class="hint">التصفير يحذف المنتجات والمبيعات والمسوقين والطلبات المحفوظة محلياً. استخدميه بحذر.</p>
+            </div>
+        </section>
+    </main>
+
+    <a id="floatWa" class="float-wa" href="#" target="_blank" rel="noopener">💬 واتساب</a>
+    <a id="floatFb" class="float-fb" href="#" target="_blank" rel="noopener">📘 ماسنجر</a>
+
+    <audio id="notifSound" preload="none"></audio>
+</body>
+</html>

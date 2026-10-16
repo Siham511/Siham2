@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا - متجر سهام 🌸</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="contact-page">
+    <main class="contact-wrapper">
+        <section class="contact-card">
+            <div class="contact-flower" aria-hidden="true">🌸</div>
+            <h1>اتصل بنا - سهام</h1>
+            <p class="sub">عندك استفسار عن الطلبات؟ رسلي لينا.</p>
+
+            <form id="contactForm">
+                <label for="cName">الاسم الكامل</label>
+                <input id="cName" name="name" type="text" autocomplete="name" placeholder="اسمك الكامل" required>
+
+                <label for="cPhone">رقم الواتساب</label>
+                <input id="cPhone" name="phone" type="tel" autocomplete="tel" placeholder="مثال 0912345678" required>
+
+                <label for="cEmail">البريد الإلكتروني (اختياري)</label>
+                <input id="cEmail" name="email" type="email" autocomplete="email" placeholder="البريد الإلكتروني">
+
+                <label for="cMessage">رسالتك</label>
+                <textarea id="cMessage" name="message" rows="4" placeholder="اكتبي رسالتك هنا..." required></textarea>
+
+                <button type="submit" class="btn-send">📩 إرسال الرسالة</button>
+            </form>
+
+            <div id="msg" role="status" aria-live="polite"></div>
+
+            <div class="btns-row">
+                <a id="contactWa" class="contact-wa" href="#" target="_blank" rel="noopener">💬 واتساب</a>
+                <a id="contactCall" class="contact-call" href="#">📞 اتصال</a>
+            </div>
+
+            <a href="index.html" class="back-link">← الرجوع للمتجر</a>
+        </section>
+    </main>
+</body>
+</html>
