@@ -738,3 +738,14 @@ document.addEventListener("DOMContentLoaded", function () {
     renderSales();
     updateReports();
 });
+// === تثبيت زر الخروج - يودي لـ index.html ===
+document.body.addEventListener("click", function(e){
+  const btn = e.target.closest('[data-action="logout"]');
+  if(!btn) return;
+  e.preventDefault();
+  if(!confirm("هل أنتِ متأكدة من تسجيل الخروج؟")) return;
+  sessionStorage.clear();
+  localStorage.removeItem("siham_demo_login");
+  localStorage.removeItem("siham_demo_user");
+  window.location.href = "./index.html";
+});
